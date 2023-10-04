@@ -1,17 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../Layout/Main";
-import Home from "../component/Home/Home";
+import React, { Suspense } from "react";
+import Loading from "../component/Loading/Loading";
+
+const Home = React.lazy(() => import("../component/Home/Home"));
+const Main = React.lazy(() => import("../Layout/Main"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main/>,
-    children:[
+    element: (
+      <Suspense fallback={<Loading/>} >
+        <Main />,
+      </Suspense>
+    ),
+    children: [
       {
-        path:'/',
-        element:<Home/>
-      }
-    ]
+        path: "/",
+        element: (
+          <Suspense fallback="Loading......">
+            <Home />
+          </Suspense>
+        ),
+      },
+    ],
   },
 ]);
 
