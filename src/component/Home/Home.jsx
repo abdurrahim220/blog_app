@@ -1,9 +1,15 @@
 import React from "react";
+import HomePost from "./HomePost/HomePost";
 
 const Home = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div className="px-8 md:px-[200px]">
+      <HomePost />
+      <HomePost />
+      <HomePost />
+      <HomePost />
+      <HomePost />
+      <HomePost />
     </div>
   );
 };

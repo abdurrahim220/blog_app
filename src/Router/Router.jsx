@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import React, { Suspense } from "react";
 import Loading from "../component/Loading/Loading";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 
 const Home = React.lazy(() => import("../component/Home/Home"));
 const Main = React.lazy(() => import("../Layout/Main"));
@@ -10,7 +12,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <Suspense fallback={<Loading/>} >
-        <Main />,
+        <Main />
       </Suspense>
     ),
     children: [
@@ -20,10 +22,18 @@ const router = createBrowserRouter([
           <Suspense fallback="Loading......">
             <Home />
           </Suspense>
-        ),
+        )
+      },
+      {
+        path:'/login',
+        element:<Login/>
+      },
+      {
+        path:'/register',
+        element:<Register/>
       },
     ],
-  },
+  }
 ]);
 
 export default router;
