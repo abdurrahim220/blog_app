@@ -4,6 +4,7 @@ import Loading from "../component/Loading/Loading";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import PostDetails from "../pages/PostDetails/PostDetails";
+import CreatePost from "../pages/CreatePost/CreatePost";
 
 const Home = React.lazy(() => import("../component/Home/Home"));
 const Main = React.lazy(() => import("../Layout/Main"));
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path:'/register',
         element:<Register/>
+      },
+      {
+        path:'/write',
+        element:<CreatePost/>
       },
       {
         path:'/postDetails/:id',
