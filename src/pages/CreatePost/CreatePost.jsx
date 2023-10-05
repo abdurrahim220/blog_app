@@ -5,8 +5,16 @@ import { ImCross } from "react-icons/im";
 const CreatePost = () => {
   const [cat, setCat] = useState("");
   const [cats, setCats] = useState([]);
+  // console.log(cats)
 //   console.log(cat)
 //   console.log(cats)
+
+
+const deleteCategory = (i) => {
+  let updateCat = [...cats];
+  updateCat.splice(i);
+  setCats(updateCat)
+};
 
   const addCategory = () => {
    
@@ -16,7 +24,7 @@ const CreatePost = () => {
     setCats(updateCats);
     console.log(updateCats)
   };
-  const deleteCategory = () => {};
+
 
   return (
     <div>
@@ -57,7 +65,7 @@ const CreatePost = () => {
                 return <div key={i} className="flex justify-center items-center space-x-2 mr-4 bg-gray-200 px-2 py-1 rounded-md">
                   <p>{c}</p>
                   <p
-                    onClick={deleteCategory}
+                    onClick={()=>deleteCategory(i)}
                     className="text-white bg-black rounded-full cursor-pointer p-1 text-sm"
                   >
                     <ImCross />
