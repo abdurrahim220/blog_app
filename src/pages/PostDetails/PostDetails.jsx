@@ -2,6 +2,7 @@ import React from "react";
 
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import Comments from "../../component/Comments/Comments";
 const PostDetails = () => {
   return (
     <div>
@@ -65,43 +66,9 @@ const PostDetails = () => {
         <div className="flex flex-col mt-4">
           <h1 className="mt-6 mb-4 font-semibold">Comments:</h1>
           {/* see other whats comments */}
-          <div className="px-2 py-2 bg-gray-200 rounded-lg my-2">
-            <div className="flex items-center justify-between">
-              <h3 className="font-bold text-gray-600">@snehasis</h3>
-              <div className="flex justify-center items-center space-x-4">
-                <p className="text-gray-500 text-sm">15/06/23</p>
-                <p className="text-gray-500 text-sm">14:50</p>
-                <div className="flex items-center justify-center space-x-2">
-                  <p className="cursor-pointer">
-                    <BiEdit />
-                  </p>
-                  <p className="cursor-pointer">
-                    <MdDelete />
-                  </p>
-                </div>
-              </div>
-            </div>
-            <p className="px-4 mt-2">Lorem ipsum dolor sit amet.</p>
-          </div>
-
-          <div className="px-2 py-2 bg-gray-200 rounded-lg my-2">
-            <div className="flex items-center justify-between">
-              <h3 className="font-bold text-gray-600">@snehasis</h3>
-              <div className="flex justify-center items-center space-x-4">
-                <p className="text-gray-500 text-sm">15/06/23</p>
-                <p className="text-gray-500 text-sm">14:50</p>
-                <div className="flex items-center justify-center space-x-2">
-                  <p className="cursor-pointer">
-                    <BiEdit />
-                  </p>
-                  <p className="cursor-pointer">
-                    <MdDelete />
-                  </p>
-                </div>
-              </div>
-            </div>
-            <p className="px-4 mt-2">Lorem ipsum dolor sit amet.</p>
-          </div>
+        <Comments/>
+        <Comments/>
+        <Comments/>
         </div>
         {/* comment */}
         <div className="flex flex-col mt-4 md:flex-row">
