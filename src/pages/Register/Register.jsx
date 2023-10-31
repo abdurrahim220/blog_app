@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from 'axios';
-
+import axios from "axios";
+import Swal from "sweetalert2";
+import {  useLocation, useNavigate } from 'react-router-dom';
 const Register = () => {
-  const [data,setData]=useState([])
-  // console.log(data)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -18,15 +20,19 @@ const Register = () => {
       email: email,
       password: password,
     };
-    const apiUrl = 'http://localhost:5001/api/register'; 
-    axios
-      .post(apiUrl, data)
-      .then((response) => {
-        console.log("Data sent successfully:", response.data);
-        // setData(response.data)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+    // console.log(data);
+    fetch("http://localhost:5001/api/register", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        navigate('/login')
+        console.log(result);
+        if (result.acknowledged === true) {
+          Swal.fire("Good job!", "Data Added SuccessFully", "success");
+        }
       });
   };
   return (

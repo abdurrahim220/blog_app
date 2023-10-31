@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { BsSearch } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import NavBarMenu from "./NavBarMenu";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const NavBar = () => {
   const [menu, setMenu] = useState(false);
+  const {user} =useContext(AuthContext)
+  console.log(user)
 
   const handleClick = () => {
     setMenu(!menu);
     // console.log("click")
   };
-  const user = false;
+  // const user = false;
   return (
     <div className="flex justify-between items-center px-6 md:px-[200px] py-4">
       <div className="text-lg md:text-xl font-semibold">
