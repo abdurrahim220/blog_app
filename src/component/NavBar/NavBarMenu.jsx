@@ -1,20 +1,26 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { URL } from "../../hook/url";
+import axios from "axios";
 
 const NavBarMenu = () => {
+  const { user, setUser } = useContext(AuthContext);
+  console.log(user);
+  const navigate = useNavigate();
 
-  const {user,setUser} = useContext(AuthContext);
-  console.log(user)
-  const handleLogout =()=>{
-    fetch("http://localhost:5001/api/logout", {
-      method: "GET", // Set the method to "GET" since it's a GET request
-      credentials: "include" // Set withCredentials to true
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(null);
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get(URL + "/api/logout", {
+        withCredentials: true,
       });
-  }
+      // console.log(res)
+      setUser(null);
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <div className="bg-black space-y-4 w-[200px] p-4 md:mr-32 rounded-md flex flex-col items-start absolute top-16 right-6">
@@ -34,7 +40,12 @@ const NavBarMenu = () => {
           <h3 className="text-white text-sm hover:text-gray-500">My Blogs</h3>
         )}
         {user && (
-          <h3 onClick={handleLogout} className="text-white text-sm hover:text-gray-500">Logout</h3>
+          <button
+            onClick={handleLogout}
+            className="text-white text-sm hover:text-gray-500"
+          >
+            Logout
+          </button>
         )}
       </div>
     </div>

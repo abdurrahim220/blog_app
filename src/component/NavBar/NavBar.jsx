@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import NavBarMenu from "./NavBarMenu";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const NavBar = () => {
+  const [prompt, setPrompt] = useState("");
   const [menu, setMenu] = useState(false);
-  const {user} =useContext(AuthContext)
-  console.log(user)
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  // console.log(user)
+  console.log(prompt);
 
   const handleClick = () => {
     setMenu(!menu);
@@ -23,13 +25,17 @@ const NavBar = () => {
       </div>
 
       <div className="flex justify-center items-center space-x-0">
-        <p>
+        <p
+          onClick={() => navigate(prompt ? "?search=" + prompt : navigate("/"))}
+          className="cursor-pointer"
+        >
           <BsSearch />
         </p>
         <input
           type="text"
-          placeholder="Search a post"
+          placeholder="prompt a post"
           className="outline-none px-3"
+          onChange={(e) => setPrompt(e.target.value)}
         />
       </div>
 
@@ -60,7 +66,11 @@ const NavBar = () => {
         )}
       </div>
       <div className="md:hidden">
-        <FaBars className="cursor-pointer relative" onClick={handleClick} size={30} />
+        <FaBars
+          className="cursor-pointer relative"
+          onClick={handleClick}
+          size={30}
+        />
         {menu && <NavBarMenu />}
       </div>
     </div>
