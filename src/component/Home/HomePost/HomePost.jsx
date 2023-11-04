@@ -1,4 +1,5 @@
 import React from "react";
+import { IF } from "../../../hook/url";
 
 const HomePost = ({post}) => {
   const {username,desc,photo,title,createdAt} = post;
@@ -7,7 +8,7 @@ const HomePost = ({post}) => {
       {/* left */}
       <div className="w-[35%] h-[200px] flex justify-center items-center">
         <img
-          src={photo}
+          src={IF+photo}
           alt=""
           className="h-full w-full object-cover"
         />
