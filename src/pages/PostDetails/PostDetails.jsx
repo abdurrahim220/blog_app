@@ -12,23 +12,28 @@ const PostDetails = () => {
   const { user } = useContext(AuthContext);
   const postId = useParams().id;
   const [posts, setPost] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   // console.log(postId);
 
-  const fetchPost = async () => {
-    setLoader(true);
-    try {
-      const res = await axios.get(URL + "/api/posts/" + postId);
-      // console.log(res.data);
-      setPost(res.data);
-      setLoader(false);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    const fetchPost = async () => {
       setLoader(true);
-    }
-  };
-
+      try {
+        const res = await axios.get(URL + "/api/posts/" + postId);
+        // console.log(res.data);
+        setPost(res.data);
+        setLoader(false);
+      } catch (error) {
+        console.log(error);
+        setLoader(true);
+      }
+    };
+    fetchPost();
+  }, [postId]);
+  
   const handleDeletePost = async () => {
     try {
       const res = await axios.delete(URL + "/api/posts/" + postId, {
@@ -41,9 +46,39 @@ const PostDetails = () => {
     }
   };
 
+
+
   useEffect(() => {
-    fetchPost();
+    const fetchPostComments = async () => {
+      setLoader(true)
+      try {
+        const res = await axios.get(URL + "/api/comments/post/" + postId);
+        setComments(res.data);
+        setLoader(false)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPostComments()
   }, [postId]);
+
+  const postComment = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(URL + "/api/comments/write", {
+        comment: comment,
+        author: user.username,
+        postId: postId,
+        userId: user._id,
+      },{withCredentials:true})
+      // set the data to post fetch comments
+      setComments([...comments, res.data]);
+      // Clear the comment input field or reset it as needed
+      setComment("");
+    } catch (error) {
+      console.log(error)
+    }
+  };
   return (
     <div>
       {loader ? (
@@ -57,7 +92,10 @@ const PostDetails = () => {
 
             {user?._id === posts?.userId && (
               <div className="flex items-center justify-center space-x-2">
-                <p className="cursor-pointer" onClick={()=>navigate("/edit/"+postId)}>
+                <p
+                  className="cursor-pointer"
+                  onClick={() => navigate("/edit/" + postId)}
+                >
                   <BiEdit size={30} />
                 </p>
                 <p className="cursor-pointer">
@@ -105,9 +143,9 @@ const PostDetails = () => {
           <div className="flex flex-col mt-4">
             <h1 className="mt-6 mb-4 font-semibold">Comments:</h1>
             {/* see other whats comments */}
-            <Comments />
-            <Comments />
-            <Comments />
+            {comments?.map((c) => {
+              return <Comments key={c._id} c={c} />;
+            })}
           </div>
           {/* comment */}
           <div className="flex flex-col mt-4 md:flex-row">
@@ -115,8 +153,13 @@ const PostDetails = () => {
               type="text"
               placeholder="Write a comment"
               className="md:w-[90%] outline-none py-2 px-4 mt-4 md:mt-0"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
-            <button className="bg-black text-white px-4 py-2 md:w-[10%] mt-4 md:mt-0">
+            <button
+              onClick={postComment}
+              className="bg-black text-white px-4 py-2 md:w-[10%] mt-4 md:mt-0"
+            >
               Add Comment
             </button>
           </div>
