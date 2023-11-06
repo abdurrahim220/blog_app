@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { URL } from "../../hook/url";
 import axios from "axios";
 
@@ -25,19 +25,19 @@ const NavBarMenu = () => {
     <div>
       <div className="bg-black space-y-4 w-[200px] p-4 md:mr-32 rounded-md flex flex-col items-start absolute top-16 right-6">
         {!user && (
-          <h3 className="text-white text-sm hover:text-gray-500">Login</h3>
+          <Link to="/login" className="text-white text-sm hover:text-gray-500">Login</Link>
         )}
         {!user && (
-          <h3 className="text-white text-sm hover:text-gray-500">Register</h3>
+          <Link to='/register' className="text-white text-sm hover:text-gray-500">Register</Link>
         )}
         {user && (
-          <h3 className="text-white text-sm hover:text-gray-500">Profile</h3>
+          <Link to={'/profile/'+user._id} className="text-white text-sm hover:text-gray-500">Profile</Link>
         )}
         {user && (
-          <h3 className="text-white text-sm hover:text-gray-500">Write</h3>
+          <Link to='write' className="text-white text-sm hover:text-gray-500">Write</Link>
         )}
         {user && (
-          <h3 className="text-white text-sm hover:text-gray-500">My Blogs</h3>
+          <Link to={'/myblog/'+user._id} className="text-white text-sm hover:text-gray-500">My Blogs</Link>
         )}
         {user && (
           <button

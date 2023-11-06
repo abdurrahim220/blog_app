@@ -8,6 +8,7 @@ import Register from "../pages/Register/Register";
 import Profile from "../pages/Profile/Profile";
 import Home from "../component/Home/Home";
 import Loader from "../component/Loader/Loader";
+import MyBlogs from "../pages/MyBlogs/MyBlogs";
 
 const Main = React.lazy(() => import("../Layout/Main"));
 
@@ -34,12 +35,16 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/profile",
+        path: "/profile/:id",
         element: <Profile />,
       },
       {
         path: "/write",
         element: <CreatePost />,
+      },
+      {
+        path: "/myblog/:id",
+        element: <MyBlogs />,
       },
       {
         path: "/postDetails/:id",
